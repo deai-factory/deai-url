@@ -1,0 +1,52 @@
+{
+    "machine": {
+        "gpu": 0,
+        "cpu": 1000,
+        "ram": 100
+    },
+    "job": {
+        "APIVersion": "V1beta1",
+        "Metadata": {
+            "CreatedAt": "0001-01-01T00:00:00Z",
+            "Requester": {}
+        },
+        "Spec": {
+            "Engine": "Docker",
+            "Verifier": "Noop",
+            },
+            "Docker": {
+                "Image": "ubuntu",
+                "Entrypoint": [
+                    "/bin/bash",
+                    "-c",
+                    {{.Query}}
+                ],
+            },
+            "Language": {
+                "JobContext": {}
+            },
+            "Wasm": {
+                "EntryModule": {}
+            },
+            "Resources": {
+                "GPU": "1"
+            },
+            "Network": {
+                "Type": "None"
+            },
+            "Timeout": 3600,
+            "inputs": [ { "StorageSource": "urlDownload", "Name": "inputs", "URL": {{.URL}}, "path": "/inputs" }
+            ],
+            "outputs": [
+                {
+                    "StorageSource": "ipfs",
+                    "Name": "outputs",
+                    "path": "/outputs"
+                }
+            ],
+            "Deal": {
+                "Concurrency": 1
+            },
+        },
+    }
+}
